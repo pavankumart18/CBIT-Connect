@@ -51,7 +51,7 @@ export default function GatePass() {
             color: 'white',
           }}
         >
-          College
+          Insight 
         </Text>
         <Text
           style={{
@@ -60,7 +60,7 @@ export default function GatePass() {
             color: 'white',
           }}
         >
-          Diaries
+          Circle 
         </Text>
       </TouchableOpacity>
     </View>

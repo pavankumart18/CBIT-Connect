@@ -29,7 +29,7 @@ export default function TimeTable({ userData }) {
           const fetchedClassInfo = querySnapshot.docs[0].data();
           setClassInfo(fetchedClassInfo);
           setFullTable(fetchedClassInfo.TimeTable);
-          console.log('Fetched Class Info:', fetchedClassInfo);
+          // console.log('Fetched Class Info:', fetchedClassInfo);
         } else {
           Alert.alert('No Data', 'No class information found for the specified class.');
         }
@@ -47,7 +47,7 @@ export default function TimeTable({ userData }) {
 
   useEffect(() => {
     if (userData) {
-      console.log('Fetching class info...');
+      // console.log('Fetching class info...');
       GetUserData();
     }
   }, [userData]);
@@ -64,7 +64,7 @@ export default function TimeTable({ userData }) {
     '9:00 - 10:00',
     '10:00 - 11:00',
     '11:00 - 12:00',
-    '8:00 - 9:00', // Lunch break
+    '12:00 - 1:00', // Lunch break
     '1:00 - 2:00',
     '2:00 - 3:00',
     '3:00 - 4:00',
@@ -89,18 +89,19 @@ export default function TimeTable({ userData }) {
       displayTiming = Timings[0];
       roomNumber = classInfo.Room;
     } else if (currentHour >= classStartHour && currentHour <= classEndHour) {
+      console.log('Current day:', currentHour);
       for (let i = 0; i < Timings.length; i++) {
         const [startTime, endTime] = Timings[i].split(' - ');
         const [startHour, startMinute] = startTime.split(':').map(Number);
         const [endHour, endMinute] = endTime.split(':').map(Number);
-        console.log(startHour, startMinute, endHour, endMinute);
+        // console.log(startHour, startMinute, endHour, endMinute);
 
         const start = new Date().setHours(startHour, startMinute, 0, 0);
         const end = new Date().setHours(endHour, endMinute, 0, 0);
 
         if (new Date().getTime() >= start && new Date().getTime() < end) {
           console.log('Class time:', Timings[i]);
-          if (Timings[i] === '8:00 - 1:00') {
+          if (Timings[i] === '12:00 - 1:00') {
             console.log("It's lunch time!");
             displayMessage = 'Lunch Break';
             displayTiming = Timings[i];

@@ -117,7 +117,7 @@ export default function CollegeDiaries() {
                         <Entypo name="chevron-left" size={30} color="white" />
                     </TouchableOpacity>
                     <Entypo name="open-book" size={24} color="white" style={{ marginLeft: 20 }} />
-                    <Text style={{ color: Colors.white, fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>College Diaries</Text>
+                    <Text style={{ color: Colors.white, fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>Insight Circle</Text>
                 </View>
 
                 {/* Middle Part */}
