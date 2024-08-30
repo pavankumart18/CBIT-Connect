@@ -12,6 +12,19 @@ CBIT-Connect is a mobile application developed for a college. It utilizes variou
 - Profile information and updating
 - Notifications
 
+View CBIT Connect
+
+```markdown
+## Photos
+
+Here are some photos showcasing our college:
+
+1. ![Home Page](home.png)
+2. ![Groups](groups.png)
+3. ![ChatRoom](chatroom.png)
+4. ![Profile](profile.png)
+```
+
 ## Installation
 
 1. Clone the repository.
