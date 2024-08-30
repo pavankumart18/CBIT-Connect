@@ -2,6 +2,8 @@
 
 CBIT-Connect is a mobile application developed for a college. It utilizes various technologies such as React Native, Vector Icons, Firebase for the database, and iOS Simulator and Android Emulator for cross-platform compatibility.
 
+Glance the App as it was not finished it was not deployed instead the progress pics can be viewed here https://tinyurl.com/glance-it-1
+
 ## Features
 
 - Attendance system (under development)
