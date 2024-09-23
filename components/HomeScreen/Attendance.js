@@ -12,7 +12,7 @@ export default function Attendance({attendance}) {
 
 
 
-  const percentage = attendance; // Replace with dynamic value if needed
+  const percentage = attendance; 
   const radius = 40;
   const strokeWidth = 10;
   const circumference = 2 * Math.PI * radius;

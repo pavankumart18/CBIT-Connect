@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, Image } from 'react-native';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, withRepeat ,withSpring} from 'react-native-reanimated';
 import { Colors } from '../constants/Colors';
+import { FadeInRight } from 'react-native-reanimated';
 
 export default function SplashScreen() {
   const rotateValue = useSharedValue(0);
@@ -58,7 +59,9 @@ export default function SplashScreen() {
         }, animatedStyle]}
       />
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Animated.Text style={[{ fontSize: 35, fontWeight: 'bold' },textAnimatedStyle]}>CBIT Connect</Animated.Text>
+        <Animated.Text style={[{ fontSize: 35, fontWeight: 'bold' ,letterSpacing:2}]}
+            entering={FadeInRight.delay(300).duration(400)}
+        >CBIT Connect</Animated.Text>
       </View>
     </View>
   );

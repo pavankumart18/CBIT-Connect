@@ -39,7 +39,7 @@ export default function IntialScreen() {
           padding: 18,
           borderRadius: 5,
           marginTop: 20,
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: Colors.black,
           borderRadius: 99,
         }}
@@ -48,7 +48,7 @@ export default function IntialScreen() {
           style={{
             fontSize: 20,
             color: Colors.black,
-            fontWeight: 'medium',
+            fontWeight: 'bold',
           }}
         >Get Started</Text>
       </TouchableOpacity>

@@ -34,7 +34,7 @@ export default function SecondScreen() {
           paddingHorizontal: 50,
           borderRadius: 5,
           marginTop: 20,
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: Colors.black,
           borderRadius: 99,
         }}
@@ -43,7 +43,7 @@ export default function SecondScreen() {
           style={{
             fontSize: 20,
             color: Colors.black,
-            fontWeight: 'medium',
+            fontWeight: 'bold',
           }}
         >Next</Text>
       </TouchableOpacity>

@@ -13,6 +13,10 @@ import { ScrollView } from 'react-native';
 import AboutUs from '../../components/HomeScreen/AboutUs';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useRouter } from 'expo-router';
+import Assignments from '../../components/HomeScreen/Assignments';
+import Foundation from '@expo/vector-icons/Foundation';
+import { Ionicons } from '@expo/vector-icons';
+import TWhatsUp from '../../components/THomeScreen/TWhatsUp';
 export default function Home() {
     const navigation = useNavigation();
     const user = auth.currentUser;
@@ -26,7 +30,7 @@ export default function Home() {
             querySnapshot.forEach((doc) => {
                 setUserData(doc.data());
             });
-            console.log(userData);
+            // console.log(userData);
         }else{
             Alert.alert('Error','Once Re-Login');
         }
@@ -42,7 +46,7 @@ export default function Home() {
     useEffect(() => {
         if (user) {
             console.log('Fetching user data...');
-            console.log(user);
+            // console.log(user);
         GetUserData();
         }
     }
@@ -57,9 +61,9 @@ export default function Home() {
             }}
         >
             <StatusBar
-                barStyle="light-content" // Adjust the color of text and icons
-                backgroundColor={Colors.lightblack} // Background color for Android
-                translucent={false} // Set to true if you want the status bar to be translucent
+                barStyle="light-content" 
+                backgroundColor={Colors.lightblack} 
+                translucent={false} 
             />
 
             <View>
@@ -67,15 +71,15 @@ export default function Home() {
                     style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'center', // Align items vertically
-                        marginTop: 50, // Move this to the parent View to affect both child elements
+                        alignItems: 'center',
+                        marginTop: 50, 
                     }}
                 >
                     <TouchableOpacity
                         onPress={() => router.push('/profile')}
                         style={{
                             flexDirection: 'row',
-                            alignItems: 'center', // Align items vertically within this View
+                            alignItems: 'center', 
                         }}
                     >
                         <Image
@@ -99,8 +103,23 @@ export default function Home() {
                             Hello, {userData?.Name}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={() => router.push('/notification')}
+
+                    >
+                    <FontAwesome5 name="bell" size={24} color={'black'} />
+                    </TouchableOpacity> */}
+                    <View
+                        style={{
+                        flexDirection: 'row',
+                        gap: 20,
+                        marginRight: 10,
+                        }}
+                    >
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.push('/notification');
+                        }}
                         style={{
                             backgroundColor: 'white',
                             padding: 10,
@@ -108,12 +127,30 @@ export default function Home() {
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}
+
                     >
                     <FontAwesome5 name="bell" size={24} color={'black'} />
-
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.push('posts');
+                        }}
+                        style={{
+                            backgroundColor: 'white',
+                            padding: 10,
+                            borderRadius: 99,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+
+                    >
+                        <Foundation name="social-instagram" size={30} color="black" />
+                    </TouchableOpacity>
+                    </View>
                 </View>
             </View>
+            {/* Whats Up */}
+            <TWhatsUp />
            {/* Attendance */}
            <Attendance attendance={userData?.attendance}/> 
 
@@ -125,8 +162,13 @@ export default function Home() {
            {/* Apply GatePass Results */}
            <GatePass />
 
+            <Assignments userData={userData} />
+
             {/* Courses */}
             <Courses userData={userData} />
+
+            {/* Assignments */}
+
 
             {/*  About Us  */}
             <AboutUs />

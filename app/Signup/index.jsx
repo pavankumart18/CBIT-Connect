@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Colors } from '../../constants/Colors';
 import { useRouter, useNavigation } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/configs/FireBaseConfigs'; 
+import { StatusBar } from 'react-native';
 
 export default function SignUp() {
     const router = useRouter();
@@ -21,46 +22,65 @@ export default function SignUp() {
         });
     }, []);
 
+    // const handleSignUp = () => {
+    //     if (username === '' || password === '') {
+    //         Alert.alert('Error', 'Please fill all the fields', [
+    //             {
+    //                 text: 'OK',
+    //                 onPress: () => console.log('OK Pressed'),
+    //             },
+    //         ]);
+    //     } else {
+    //         setError('');
+
+    //         // Firebase sign-up logic
+    //         createUserWithEmailAndPassword(auth, username, password)
+    //             .then(async (userCredential) => {
+    //                 const { user } = userCredential;
+    //                 console.log('User signed up:');
+
+    //                 // Store additional user info (category) in Firestore
+    //                 await setDoc(doc(db, 'users', user.uid), {
+    //                     username: username,
+    //                     category: category,
+    //                     email: user.email,
+    //                     createdAt: new Date(),
+    //                 });
+
+    //                 // Navigate to login or another screen after sign-up
+    //                 router.push('/login');
+    //             })
+    //             .catch((error) => {
+    //                 const errorCode = error.code;
+    //                 const errorMessage = error.message;
+    //                 setError(errorMessage);
+    //                 Alert.alert('Sign Up Failed', errorMessage, [
+    //                     {
+    //                         text: 'OK',
+    //                         onPress: () => console.log('OK Pressed'),
+    //                     },
+    //                 ]);
+    //             });
+    //     }
+    // };
     const handleSignUp = () => {
-        if (username === '' || password === '' || category === '') {
-            Alert.alert('Error', 'Please fill all the fields', [
-                {
-                    text: 'OK',
-                    onPress: () => console.log('OK Pressed'),
-                },
-            ]);
-        } else {
-            setError('');
-
-            // Firebase sign-up logic
-            createUserWithEmailAndPassword(auth, username, password)
-                .then(async (userCredential) => {
-                    const { user } = userCredential;
-                    console.log('User signed up:');
-
-                    // Store additional user info (category) in Firestore
-                    await setDoc(doc(db, 'users', user.uid), {
-                        username: username,
-                        category: category,
-                        email: user.email,
-                        createdAt: new Date(),
-                    });
-
-                    // Navigate to login or another screen after sign-up
-                    router.push('/login');
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setError(errorMessage);
-                    Alert.alert('Sign Up Failed', errorMessage, [
-                        {
-                            text: 'OK',
-                            onPress: () => console.log('OK Pressed'),
-                        },
-                    ]);
-                });
+        if (username === '' || password === '') {
+            Alert.alert('Error', 'Please fill in both fields');
+            return;
         }
+
+        signInWithEmailAndPassword(auth, username, password)
+            .then((userCredential) => {
+                // Signed in
+                const { user } = userCredential;
+                console.log('User logged in:');
+                router.replace('teacher-home'); 
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                Alert.alert('Login Failed', errorMessage);
+            });
     };
 
     return (
@@ -72,6 +92,7 @@ export default function SignUp() {
                 height: '100%',
             }}
         >
+            <StatusBar barStyle="light-content" />
             <TouchableOpacity onPress={() => router.back()}>
                 <Ionicons name="chevron-back" size={35} color="white" />
             </TouchableOpacity>
@@ -89,7 +110,7 @@ export default function SignUp() {
                         marginTop: 20,
                     }}
                 >
-                    Hey,
+                    Welcome,
                 </Text>
                 <Text
                     style={{
@@ -99,7 +120,7 @@ export default function SignUp() {
                         marginTop: 20,
                     }}
                 >
-                    CBITian
+                    CBIT Team!
                 </Text>
             </View>
             <View>
@@ -125,7 +146,7 @@ export default function SignUp() {
                     }}
                 />
             </View>
-            <View>
+            {/* <View>
                 <Text
                     style={{
                         color: Colors.white,
@@ -147,7 +168,7 @@ export default function SignUp() {
                         marginTop: 10,
                     }}
                 />
-            </View>
+            </View> */}
             <View>
                 <Text
                     style={{
@@ -189,7 +210,7 @@ export default function SignUp() {
                         fontWeight: 'bold',
                     }}
                 >
-                    Sign Up
+                    Login
                 </Text>
             </TouchableOpacity>
             {error ? <Text style={{ color: 'white', marginTop: 20 }}>{error}</Text> : null}

@@ -4,8 +4,8 @@ import { Colors } from '../../constants/Colors';
 import { useRouter, useNavigation } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/configs/FireBaseConfigs'; // Ensure your Firebase config is correct
-
+import { auth } from '@/configs/FireBaseConfigs'; 
+import { StatusBar } from 'react-native';
 export default function Login() {
     const router = useRouter();
     const navigation = useNavigation();
@@ -29,7 +29,7 @@ export default function Login() {
                 // Signed in
                 const { user } = userCredential;
                 console.log('User logged in:');
-                router.push('home'); // Navigate to home or another screen after successful login
+                router.replace('home'); 
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -47,6 +47,7 @@ export default function Login() {
                 height: '100%',
             }}
         >
+            <StatusBar barStyle="light-content" />
             <TouchableOpacity
                 onPress={() => router.back()}
             >
@@ -66,7 +67,7 @@ export default function Login() {
                         marginTop: 20,
                     }}
                 >
-                    Welcome Back
+                    Welcome,
                 </Text>
                 <Text
                     style={{
@@ -140,7 +141,7 @@ export default function Login() {
                     style={{
                         fontSize: 20,
                         color: Colors.black,
-                        fontWeight: 'medium',
+                        fontWeight: 'bold',
                     }}
                 >
                     Login

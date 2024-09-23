@@ -55,7 +55,7 @@ export default function SeeAllGroups() {
                 members: arrayUnion(user.email),
             });
             console.log(`User ${user.email} added to group ${groupId}`);
-            // Optionally, you can refetch the groups to update the UI after joining
+            
             GetGroups();
         } catch (error) {
             console.error('Error joining group: ', error);
@@ -106,7 +106,7 @@ export default function SeeAllGroups() {
                     >
                         <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                             <Image
-                                source={{ uri: group.profilePicture }} // Assuming you have a 'profilePicture' field in your Firestore document
+                                source={{ uri: group.profilePicture }} 
                                 style={{ width: 50, height: 50, borderRadius: 25 }}
                             />
                             <View style={{ flex: 1 }}>
