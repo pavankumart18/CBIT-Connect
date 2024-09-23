@@ -36,6 +36,20 @@ export default function RootLayout() {
           headerShown: false
         }}
       />
+      <Stack.Screen name="(teachers)" 
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen name="(social)" 
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen name="view-class/index"
+      />
+      <Stack.Screen name="view-student/index"
+      />
     </Stack>
   );
 }

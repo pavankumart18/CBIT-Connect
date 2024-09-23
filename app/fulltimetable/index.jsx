@@ -44,8 +44,7 @@ export default function FullTimeTable() {
 
   const currentDay = daysOfWeek[currentDayIndex];
   const timetableString = FullTable[currentDay] || '';
-  const timetableData = timetableString.split(','); // Split the string into an array
-
+  const timetableData = timetableString.split(','); 
   useEffect(() => {
     navigation.setOptions({
       headerShown: false,

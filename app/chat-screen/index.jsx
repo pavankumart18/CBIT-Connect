@@ -32,16 +32,13 @@ export default function ChatScreen() {
         if (chat?.id) {
             const messagesRef = collection(db, 'groups', chat.id, 'messages');
 
-            // Real-time listener for messages
             const q = query(messagesRef, orderBy('timestamp', 'asc'));
             const unsubscribe = onSnapshot(q, (snapshot) => {
                 const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 setMessages(messages);
-                // Scroll to the bottom when new messages are added
                 scrollViewRef.current?.scrollToEnd({ animated: true });
             });
 
-            // Retrieve group members
             const membersRef = collection(db, 'groups', chat.id, 'members');
             const getMembers = async () => {
                 try {
@@ -116,7 +113,7 @@ export default function ChatScreen() {
             const messagesRef = collection(db, 'groups', chat.id, 'messages');
             await addDoc(messagesRef, message);
             console.log('Message sent successfully:', message);
-            setInput(''); // Clear input after sending
+            setInput(''); 
             setImage(null); // Clear selected image
         } catch (error) {
             console.error('Error sending message: ', error);
@@ -128,10 +125,19 @@ export default function ChatScreen() {
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <View style={{ flex: 1, backgroundColor: Colors.lightblack, paddingTop: 40,
+            <View style={{ 
+                flex: 1, 
+                backgroundColor: Colors.lightblack, 
+                paddingTop: 40,
              }}>
                 {/* Upper Part */}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'white', borderBottomWidth: 1, padding: 10 }}>
+                <View style={{ 
+                    flexDirection: 'row', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    borderBottomColor: 'white', 
+                    borderBottomWidth: 1, 
+                    padding: 10 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 20 }}>
                         <Pressable onPress={() => router.back()}>
                             <Ionicons name="chevron-back" size={24} color="white" />

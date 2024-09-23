@@ -32,7 +32,7 @@ export default function Profile() {
                 const data = doc.data();
                 setUserData({oid: doc.id, ...data});
                 if (data.cv) {
-                    setCvUri(data.cv); // Set CV URI if it exists
+                    setCvUri(data.cv);
                 }
             });
         } else {
@@ -42,7 +42,7 @@ export default function Profile() {
 
     const uploadCV = async () => {
         const result = await DocumentPicker.getDocumentAsync({ type: 'application/pdf' });
-        console.log(result)
+        // console.log(result)
         if (!result.assets[0].canceled) {
             setUploading(true);
             const response = await fetch(result?.assets[0]?.uri);
@@ -60,7 +60,6 @@ export default function Profile() {
     const shareCV = async () => {
         if (cvUri) {
             try {
-                // Download the CV to the local cache directory
                 const { uri } = await FileSystem.downloadAsync(cvUri, FileSystem.cacheDirectory + 'cv.pdf');
     
                 // Share the downloaded CV
@@ -89,7 +88,7 @@ export default function Profile() {
 
     const logout = () => {
         auth.signOut();
-        router.replace('/login');
+        router.replace('/DummyScreen/FourthScreen');
     };
 
     useEffect(() => {

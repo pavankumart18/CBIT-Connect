@@ -44,13 +44,10 @@ export default function Notification() {
 
     const handleDismiss = async (notificationId) => {
         try {
-            // Create a reference to the notification document
             const notificationRef = doc(db, 'notifications', notificationId);
     
-            // Delete the document using the reference
             await deleteDoc(notificationRef);
     
-            // Update the local state to remove the notification from the list
             setNotifications(notifications.filter((notif) => notif.id !== notificationId));
     
             console.log('Notification successfully deleted:', notificationId);
@@ -64,79 +61,53 @@ export default function Notification() {
 
     const handleAccept = (notificationId) => {
         console.log('Accepted:', notificationId);
-        // Handle the accept logic here
+        
     };
 
     const handleReject = (notificationId) => {
         console.log('Rejected:', notificationId);
-        // Handle the reject logic here
+        
     };
-
     const renderNotification = ({ item }) => (
-        <View
-            style={{
-                backgroundColor: Colors.darkGray,
-                padding: 15,
-                borderRadius: 10,
-                marginBottom: 10,
+        <TouchableOpacity
+            onPress={() => {
+                if (item.title === 'Gate Pass Request') {
+                    router.replace('/teacher-gatepass');
+                }
             }}
         >
             <View
                 style={{
-                    backgroundColor: getRandomItem(),
+                    backgroundColor: Colors.darkGray,
                     padding: 15,
                     borderRadius: 10,
+                    marginBottom: 10,
                 }}
             >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{item.title}</Text>
-                    <TouchableOpacity onPress={() => handleDismiss(item.id)}>
-                        <Ionicons name="close" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-                <Text style={{ color: 'white', marginTop: 10 }}>{item.message}</Text>
-                {item.title === 'Group Invitation' && (
-                    <View style={{ marginTop: 5 }}>
-                        <Text style={{ color: 'black', fontWeight: 'bold' }}>Person: {item.person}</Text>
-                        <Text style={{ color: 'black', fontWeight: 'bold' }}>Class: {item.class}</Text>
-                        <Text style={{ color: 'black', fontWeight: 'bold' }}>Section: {item.no}</Text>
-                        <View style={{ flexDirection: 'row', marginTop: 20, gap: 10 }}>
-                            <TouchableOpacity
-                                onPress={() => handleAccept(item.id)}
-                                style={{
-                                    backgroundColor: Colors.white,
-                                    padding: 10,
-                                    borderRadius: 99,
-                                    borderColor: 'black',
-                                    borderWidth: 1,
-                                }}
-                            >
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                    <AntDesign name="check" size={24} color="green" />
-                                    <Text style={{ color: 'green', fontWeight: 'bold', marginLeft: 5 }}>Accept</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => handleReject(item.id)}
-                                style={{
-                                    backgroundColor: Colors.white,
-                                    padding: 10,
-                                    borderRadius: 99,
-                                    borderColor: 'black',
-                                    borderWidth: 1,
-                                }}
-                            >
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                    <AntDesign name="close" size={24} color="red" />
-                                    <Text style={{ color: 'red', fontWeight: 'bold', marginLeft: 5 }}>Reject</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
+                <View
+                    style={{
+                        backgroundColor: getRandomItem(),
+                        padding: 15,
+                        borderRadius: 10,
+                    }}
+                >
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'black' }}>{item.title}</Text>
+                        <TouchableOpacity onPress={() => handleDismiss(item.id)}>
+                            <Ionicons name="close" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
-                )}
+                    <Text style={{ color: 'black', marginTop: 10,fontWeight:'bold' }}>{item.message}</Text>
+                    {item.title === 'Gate Pass Request' && (
+                        <View style={{ marginTop: 5 }}>
+                            <Text style={{ color: 'black', fontWeight: 'medium' }}>Request ID: {item.requestId}</Text>
+                        </View>
+                    )}
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
+    
 
     return (
         <View

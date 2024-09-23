@@ -87,7 +87,7 @@ export default function GroupScreen({chat}) {
                     gap: 20,
                 }}
             >
-                <View
+                {/* <View
                     style={{
                         backgroundColor: 'black',
                         padding: 10,
@@ -95,7 +95,7 @@ export default function GroupScreen({chat}) {
                     }}
                 >
                 <AntDesign name="heart" size={24} color="white" />
-                </View>
+                </View> */}
                 <TouchableOpacity
                     onPress={() => router.push({
                         pathname: '/chat-screen',

@@ -27,7 +27,7 @@ export default function SecondScreen() {
           paddingHorizontal: 60,
           borderRadius: 5,
           marginTop: 20,
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: Colors.black,
           borderRadius: 99,
           backgroundColor: Colors.radium,
@@ -37,9 +37,9 @@ export default function SecondScreen() {
           style={{
             fontSize: 20,
             color: Colors.black,
-            fontWeight: 'medium',
+            fontWeight: 'bold',
           }}
-        >Sign In</Text>
+        >Student</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => router.push('/Signup')}
@@ -48,7 +48,7 @@ export default function SecondScreen() {
           borderRadius: 5,
           paddingHorizontal: 60,
           marginTop: 10,
-          borderWidth: 1,
+          borderWidth: 2,
           borderColor: Colors.black,
           borderRadius: 99,
           backgroundColor: Colors.white,
@@ -58,9 +58,9 @@ export default function SecondScreen() {
           style={{
             fontSize: 20,
             color: Colors.black,
-            fontWeight: 'medium',
+            fontWeight: 'bold',
           }}
-        >Sign Up</Text>
+        >CBIT Staff</Text>
       </TouchableOpacity>
 
     </View>

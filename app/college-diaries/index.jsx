@@ -29,12 +29,10 @@ export default function CollegeDiaries() {
 
         const messagesRef = collection(db, 'book');
 
-        // Real-time listener for messages
         const q = query(messagesRef, orderBy('timestamp', 'asc'));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setMessages(messages);
-            // Scroll to the bottom when new messages are added
             scrollViewRef.current?.scrollToEnd({ animated: true });
         });
 
@@ -98,8 +96,8 @@ export default function CollegeDiaries() {
             const messagesRef = collection(db, 'book');
             await addDoc(messagesRef, message);
             console.log('Message sent successfully:', message);
-            setInput(''); // Clear input after sending
-            setImage(null); // Clear selected image
+            setInput(''); 
+            setImage(null); 
         } catch (error) {
             console.error('Error sending message: ', error);
         }

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar, ScrollView, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from 'expo-router';
 import { Colors } from '../../constants/Colors';
@@ -28,20 +28,20 @@ export default function Chats() {
             groups.push({ id: doc.id, ...data });
         });
         setGroups(groups);
-        console.log(groups);
+        // console.log(groups);
     };
 
     const checkIfAdmin = async () => {
         if (!user) return;
     
         try {
-            const q=query(collection(db,'MyInfo'),where('email','==',user.email))// Note: No need for 'user?.email' if user is verified
-            const querySnapshot = await getDocs(q);// Use getDoc instead of getDocs for a single document
+            const q=query(collection(db,'MyInfo'),where('email','==',user.email))
+            const querySnapshot = await getDocs(q);
             if (querySnapshot.size > 0) {
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     if (data.Admin) {
-                        console.log('Document data:', data);
+                        // console.log('Document data:', data);
                         setIsAdmin(true);
                     } else {
                         console.log('No such document!');
@@ -54,11 +54,12 @@ export default function Chats() {
             }
         } catch (error) {
             console.error('Error fetching document: ', error);
+            Alert.alert("Please Re-Login");
         }
     };
     
 
-    useEffect(() => {
+    useEffect(() => { 
         navigation.setOptions({
             headerShown: false,
         });
@@ -67,7 +68,7 @@ export default function Chats() {
             console.log('Fetching Groups...');
             GetGroups();
             checkIfAdmin();
-            console.log(isAdmin);
+            // console.log(isAdmin);
         }
     }, []);
 

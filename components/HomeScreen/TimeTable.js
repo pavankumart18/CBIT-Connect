@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { getDocs, collection, query, where } from 'firebase/firestore';
@@ -29,12 +29,11 @@ export default function TimeTable({ userData }) {
           const fetchedClassInfo = querySnapshot.docs[0].data();
           setClassInfo(fetchedClassInfo);
           setFullTable(fetchedClassInfo.TimeTable);
-          // console.log('Fetched Class Info:', fetchedClassInfo);
         } else {
           Alert.alert('No Data', 'No class information found for the specified class.');
         }
       } catch (error) {
-        console.error('Error fetching class data:', error);
+        console.log('Error fetching class data:', error);
         // Alert.alert('Error', 'Unable to fetch class data. Please try again later.');
       } finally {
         setLoading(false);
@@ -46,14 +45,18 @@ export default function TimeTable({ userData }) {
   };
 
   useEffect(() => {
-    if (userData) {
-      // console.log('Fetching class info...');
+    if (user) {
       GetUserData();
     }
   }, [userData]);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+        <Text style={{ marginTop: 10, color: Colors.primary }}>Loading...</Text>
+      </View>
+    );
   }
 
   if (!classInfo || !userData) {
@@ -64,10 +67,10 @@ export default function TimeTable({ userData }) {
     '9:00 - 10:00',
     '10:00 - 11:00',
     '11:00 - 12:00',
-    '12:00 - 1:00', // Lunch break
-    '1:00 - 2:00',
-    '2:00 - 3:00',
-    '3:00 - 4:00',
+    '12:00 - 13:00',
+    '13:00 - 14:00',
+    '14:00 - 15:00',
+    '15:00 - 16:00',
   ];
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -89,8 +92,8 @@ export default function TimeTable({ userData }) {
       displayTiming = Timings[0];
       roomNumber = classInfo.Room;
     } else if (currentHour >= classStartHour && currentHour <= classEndHour) {
-      console.log('Current day:', currentHour);
       for (let i = 0; i < Timings.length; i++) {
+
         const [startTime, endTime] = Timings[i].split(' - ');
         const [startHour, startMinute] = startTime.split(':').map(Number);
         const [endHour, endMinute] = endTime.split(':').map(Number);
@@ -98,15 +101,18 @@ export default function TimeTable({ userData }) {
 
         const start = new Date().setHours(startHour, startMinute, 0, 0);
         const end = new Date().setHours(endHour, endMinute, 0, 0);
+        // console.log(new Date().getTime()>=start,new Date().getTime() < end);
 
         if (new Date().getTime() >= start && new Date().getTime() < end) {
-          console.log('Class time:', Timings[i]);
-          if (Timings[i] === '12:00 - 1:00') {
-            console.log("It's lunch time!");
+          if (Timings[i] === '12:00 - 13:00') {
             displayMessage = 'Lunch Break';
             displayTiming = Timings[i];
           } else {
-            displayMessage = classInfo.TimeTable[currentDay][i];
+            if(start>=13){
+              displayMessage = classInfo.TimeTable[currentDay][i-1];
+            }else{
+              displayMessage = classInfo.TimeTable[currentDay][i];
+            }
             displayTiming = Timings[i];
             roomNumber = classInfo.Room;
           }

@@ -27,22 +27,33 @@ export default function Courses() {
 
   const GetSubjects = async () => {
     try {
-      // Get subjects based on class
-      const q1 = query(collection(db, 'MyInfo'), where('email', '==', user.email));
-      const querySnapshot1 = await getDocs(q1);
-      querySnapshot1.forEach((doc) => {
-        setMyInfo(doc.data());
-      });
+      if(user){
+        const q1 = query(collection(db, 'MyInfo'), where('email', '==', user?.email));
+        const querySnapshot1 = await getDocs(q1);
+        querySnapshot1.forEach((doc) => {
+          setMyInfo(doc.data());
+        });
 
-      const q2 = query(collection(db, 'ClassInfo'), where('class', '==', MyInfo?.class));
-      const querySnapshot2 = await getDocs(q2);
-      let subjectsList = [];
-      querySnapshot2.forEach((doc) => {
-        subjectsList = doc.data().Subjects;
-      });
-      setSubjects(subjectsList);
+        if(MyInfo){
+          const q2 = query(collection(db, 'ClassInfo'), where('class', '==', MyInfo?.class));
+          const querySnapshot2 = await getDocs(q2);
+          let subjectsList = [];
+          querySnapshot2.forEach((doc) => {
+            subjectsList = doc.data().Subjects;
+          });
+          setSubjects(subjectsList);
+      }
+      }else{
+        return (
+          <View>
+            <Text>
+              Loading....
+            </Text>
+          </View>
+        )
+      }
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      console.log("Error fetching data: ", error);
     }
   };
 
@@ -71,7 +82,7 @@ export default function Courses() {
                 borderBottomWidth: 1,
                 borderBottomColor: '#ccc',
                 width: 250,
-                height: 180, // Adjust height as needed
+                height: 180, 
                 marginHorizontal: 5,
                 backgroundColor: getRandomColor(),
                 borderRadius: 10,

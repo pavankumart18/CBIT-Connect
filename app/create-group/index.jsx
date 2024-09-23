@@ -35,15 +35,15 @@ export default function CreateGroup() {
             admin: user?.email,
             category: groupCategory,
             profileUrl: groupProfilePicture,
-            members: [user?.email], // Add the admin as the first member
-            createdAt: new Date(),  // Optional: Add a timestamp
+            members: [user?.email], 
+            createdAt: new Date(),  
         };
 
         try {
-            // Add the group details to the "groups" collection
+            
             await setDoc(doc(collection(db, "groups")), groupDetails);
             console.log("Group created successfully:", groupDetails);
-            // Clear the input fields or navigate back
+            
             router.back();
         } catch (error) {
             console.error("Error creating group:", error);
@@ -137,7 +137,7 @@ export default function CreateGroup() {
                         padding: 20,
                         borderRadius: 20,
                         textAlignVertical: 'top',
-                        height: 100, // Adjust height as needed
+                        height: 100, 
                     }}
                 />
             </View>

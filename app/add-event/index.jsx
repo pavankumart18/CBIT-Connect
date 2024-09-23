@@ -19,6 +19,7 @@ export default function AddEvent() {
         eventName: '',
         timings: '',
         venue: '',
+        status:'pending',
     });
     const [error, setError] = useState('');
     const [event, setEvent] = useState('');
@@ -31,7 +32,8 @@ export default function AddEvent() {
         }) 
     }, [])
     useEffect(() => {
-        console.log(sendData)
+        console.log("Sending Data")
+        // console.log(sendData)
     }
     , [sendData])
     const AddEvent = async () => {
@@ -42,14 +44,13 @@ export default function AddEvent() {
                 eventName: event,
                 timings: timings,
                 venue: venue,
+                status:'pending',
             };
     
             try {
-                // Add a new document in the "tasks" collection
                 await setDoc(doc(collection(db, "tasks")), eventDetails);
                 console.log("Event added successfully:", eventDetails);
     
-                // Navigate to the events page
                 router.push('/events');
             } catch (error) {
                 console.error("Error adding event:", error);
